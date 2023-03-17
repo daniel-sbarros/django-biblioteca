@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="card text-bg-light my-2 h-100">
+    <div class="card-header h4 text-center w-100">
+        <span class="h2">
+            Registros de Alugueis de Livros
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="row" style="font-weight: bold;">
+            <div class="col">
+                Livro
+            </div>
+            <div class="col">
+                Cliente
+            </div>
+            <div class="col">
+                Data
+            </div>
+            <div class="col">
+                Previsão de Retorno
+            </div>
+            <div class="col">
+                Preço Pago
+            </div>
+            <div class="col">
+                Entregue
+            </div>
+            <div class="col"></div>
+        </div>
+
+        {% if alugueis %}
+
+        {% for aluguel in alugueis %}
+        <hr class="my-1">
+
+        <div class="link-reg row text-decoration-none text-bg-light">
+            <div class="col">
+                {{ aluguel.rental_book }}
+            </div>
+            <div class="col">
+                {{ aluguel.rental_customer }}
+            </div>
+            <div class="col">
+                {{ aluguel.rental_date|date:"d/M/Y H:i" }}
+            </div>
+            <div class="col">
+                {{ aluguel.return_period|date:"d/M/Y H:i" }}
+            </div>
+            <div class="col">
+                R$ {{ aluguel.amount_paid }}
+            </div>
+            <div class="col">
+                {%if aluguel.delivered %}SIM{% else %}NÃO{% endif %}
+            </div>
+            <div class="col">
+                <a href="{% url 'rental' aluguel.id %}" class="btn btn-primary w-75">
+                    Detalhes
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <hr class="my-1">
+        Não há transações realisadas.
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

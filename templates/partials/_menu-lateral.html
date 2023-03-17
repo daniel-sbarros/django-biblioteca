@@ -1,0 +1,70 @@
+{% load static %}
+<div class="d-flex flex-nowrap sidebar">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark w-100">
+        <a href="/" class="d-none d-lg-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-4">Biblioteca X</span>
+        </a>
+        <hr class="d-none d-lg-block">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="{% url 'home' %}"
+                    class="nav-link {% if 'home' in request.path %}active{% else %}text-white{% endif %}"
+                    aria-current="page">
+                    <i class='fa fa-home' style='color: white; width: 25px'></i>
+                    <div class="d-none d-lg-inline">
+                        Página Inicial
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'rentals' %}"
+                    class="nav-link {% if 'rentals' in request.path %}active{% else %}text-white{% endif %}">
+                    <i class='fas fa-money-check-alt' style='color: white; width: 25px'></i>
+                    <div class="d-none d-lg-inline">
+                        Aluguel
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'customers' %}"
+                    class="nav-link {% if 'customers' in request.path %}active{% else %}text-white{% endif %}">
+                    <i class='fa fa-address-book' style='color: white; width: 25px'></i>
+                    <div class="d-none d-lg-inline">
+                        Clientes
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'books' %}"
+                    class="nav-link {% if 'books' in request.path %}active{% else %}text-white{% endif %}">
+                    <i class='fa fa-book' style='color: white; width: 25px'></i>
+                    <div class="d-none d-lg-inline">
+                        Livros
+                    </div>
+                </a>
+            </li>
+            {% if user.is_superuser %}
+            <li>
+                <a href="{% url 'users' %}"
+                    class="nav-link {% if 'users' in request.path %}active{% else %}text-white{% endif %}">
+                    <i class='fa fa-user' style='color: white; width: 25px'></i>
+                    <div class="d-none d-lg-inline">
+                        Usuários
+                    </div>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+        <hr>
+        <div>
+            <a class="nav-link text-white" href="{% url 'logout' %}">
+                <i class='fas fa-sign-out-alt' style='color: white; width: 25px'></i>
+                <div class="d-none d-lg-inline">
+                    SAIR
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'partials/sidebars.js' %}"></script>

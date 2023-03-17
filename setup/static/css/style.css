@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+main {
+    height: 100vh;
+}
+
+.conteudo {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar {
+    height: 100vh;
+}
+
+h1 { color: red; text-align: center; }
+
+.link-reg:hover {
+    color: #e20e0e;
+}

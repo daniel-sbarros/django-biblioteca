@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1>Página Inicial</h1>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-lg-2 align-items-stretch p-2">
+    <div class="col p-1" style="min-height: 450px;">
+        <div class="card text-bg-light h-100 p-0">
+            <div class="card-header w-100 h2 text-center">
+                Últimos Alugueis
+            </div>
+            <div class="card-body d-flex flex-column">
+                {% if rentals %}
+                <div class="ultimos-alugueis">
+                    <div class="row" style="font-weight: bold;">
+                        <div class="col">Livro</div>
+                        <div class="col">Cliente</div>
+                        <div class="col-3">Data</div>
+                    </div>
+                    {% for rental in rentals %}
+                    <hr class="m-1">
+                    <div class="row">
+                        <div class="col">
+                            {{ rental.rental_book }}
+                        </div>
+                        <div class="col">
+                            {{ rental.rental_customer }}
+                        </div>
+                        <div class="col-3 fs-8">
+                            {{ rental.rental_date|date:"d/M/Y" }} <!-- às {{ rental.rental_date|time:"H:i" }} -->
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div>
+                    Nenhum aluguel realizado.
+                </div>
+                {% endif %}
+                <div class="mt-auto">
+                    <a href="{% url 'rentals' %}" class="btn btn-primary mt-3 w-100">
+                        Ver mais
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col p-1" style="min-height: 450px;">
+        <div class="card text-bg-light h-100 p-0">
+            <div class="card-header w-100 h2 text-center">
+                Últimos livros cadastrados
+            </div>
+            <div class="card-body d-flex flex-column">
+                {% if books %}
+                <div class="row" style="font-weight: bold;">
+                    <div class="col">
+                        Titulo
+                    </div>
+                    <div class="col">
+                        Autor
+                    </div>
+                    <div class="col-2">
+                        Categoria
+                    </div>
+                    <div class="col-2">
+                        Ano
+                    </div>
+                </div>
+                {% for book in books %}
+                <hr class="m-1">
+                <div class="row">
+                    <div class="col">
+                        {{ book.title }}
+                    </div>
+                    <div class="col">
+                        {{ book.author }}
+                    </div>
+                    <div class="col-2">
+                        {{ book.category }}
+                    </div>
+                    <div class="col-2">
+                        {{ book.release_year }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% else %}
+                <div class="text-title">
+                    Nenhum livro cadastrado.
+                </div>
+                {% endif %}
+                <div class="mt-auto">
+                    <a href="{% url 'books' %}" class="btn btn-primary mt-3 w-100">
+                        Ver mais
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-lg-3 p-2">
+    <div class="col p-1" style="min-height: 300px;">
+        <div class="card text-bg-light h-100 p-0">
+            <div class="card-header w-100 h4 text-center">
+                Clientes em débito
+            </div>
+            <div class="card-body d-flex flex-column">
+                {% if debitos %}
+                <div class="row" style="font-weight: bold;">
+                    <div class="col">
+                        Cliente
+                    </div>
+                    <div class="col">
+                        Livro
+                    </div>
+                    <div class="col"></div>
+                </div>
+                {% for debito in debitos %}
+                <hr class="m-1">
+                <div class="row">
+                    <div class="col">
+                        {{ debito.rental_customer }}
+                    </div>
+                    <div class="col">
+                        {{ debito.rental_book }}
+                    </div>
+                    <div class="col w-100">
+                        <a href="{% url 'customer' debito.rental_customer.id %}" class="btn btn-primary w-100 m-0 p-0">Ver mais</a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                Dados não encontrados.
+                {% endif %}
+                <div class="mt-auto">
+                    <a href="" class="btn btn-primary w-100 mt-3">
+                        Ver mais
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col p-1" style="min-height: 300px;">
+        <div class="card text-bg-light h-100 p-0">
+            <div class="card-header w-100 h4 text-center">
+                Lorem ipsum dolor sit amet.
+            </div>
+            <div class="card-body d-flex flex-column">
+                <p style="text-align: justify;">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae esse aliquid neque asperiores quod.
+                    Dignissimos id recusandae dolor labore corrupti, consequatur sint debitis sit in hic aspernatur
+                    saepe aliquam deleniti?
+                </p>
+
+                <div class="mt-auto">
+                    <a href="" class="btn btn-primary w-100 mt-3">
+                        Ver mais
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col p-1" style="min-height: 300px;">
+        <div class="card text-bg-light h-100 p-0">
+            <div class="card-header w-100 h4 text-center">
+                Lorem ipsum dolor sit amet.
+            </div>
+            <div class="card-body d-flex flex-column">
+                <p style="text-align: justify;">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae esse aliquid neque asperiores quod.
+                    Dignissimos id recusandae dolor labore corrupti, consequatur sint debitis sit in hic aspernatur
+                    saepe aliquam deleniti?
+                </p>
+
+                <div class="mt-auto">
+                    <a href="" class="btn btn-primary w-100 mt-3">
+                        Ver mais
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

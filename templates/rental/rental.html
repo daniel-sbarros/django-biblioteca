@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if aluguel %}
+<div class="card text-bg-light my-2 h-100">
+    <div class="card-header h4 text-center w-100">
+            O livro {{ aluguel.rental_book }} foi alugado  
+            <span class="d-none d-lg-inline">
+                por {{ aluguel.rental_customer }}
+            </span>
+             em {{ aluguel.rental_date|date:"d/M/Y" }} 
+            às {{ aluguel.rental_date|date:"H:i" }}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <img src="{{ aluguel.rental_book.image.url }}" alt="Capa do Livro" style="padding: 10px; border: 1px solid #aaa; border-radius: 5px; box-shadow: 5px 5px 5px #777;">
+            </div>
+            <div class="col">
+                <div class="col d-flex border-bottom py-2">
+                    <span class="d-inline-block" style="font-weight: bold; width: 150px;">Título:</span> {{ aluguel.rental_book }}
+                </div>
+                <div class="col d-flex border-bottom py-2">
+                    <span class="d-inline-block" style="font-weight: bold; width: 150px;">Cliente:</span> {{ aluguel.rental_customer }}
+                </div>
+                <div class="col d-flex border-bottom py-2">
+                    <span class="d-inline-block" style="font-weight: bold; width: 150px;">Data:</span> {{ aluguel.rental_date }}
+                </div>
+                <div class="col d-flex border-bottom py-2">
+                    <span class="d-inline-block" style="font-weight: bold; width: 150px;">Fim do Aluguel:</span> {{ aluguel.return_period }}
+                </div>
+                <div class="col d-flex border-bottom py-2">
+                    <span class="d-inline-block" style="font-weight: bold; width: 150px;">Atendente:</span> {{ aluguel.registration_user }}
+                </div>
+                <div class="col d-flex border-bottom py-2">
+                    <span class="d-inline-block" style="font-weight: bold; width: 150px;">Valor Pago:</span> {{ aluguel.amount_paid }}
+                </div>
+                <div class="col d-flex py-2">
+                    <span class="d-inline-block" style="font-weight: bold; width: 150px;">Livro Devolvido:</span> 
+                    {% if aluguel.delivered %}SIM{% else %}NÃO{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="h4 alert">
+    O registro não existe.
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="card text-bg-light my-2">
+    <div class="card-header h4 text-center w-100">
+        Dados Pessoais
+    </div>
+    <div class="card-body">
+        <div class="w-100 h-100 row" style="text-align: justify;">
+            <div class="col-2 rounded-circle d-none d-lg-inline">
+                {% if customer.photo == null or customer.photo == '' %}
+                <img src="{% static '/assets/imagens/not-found.png' %}" class="rounded-circle"
+                    style="height: 150px; width: auto;">
+                {% else %}
+                <img src="{{ customer.photo.url }}" class="rounded-circle" style="height: 150px; width: auto;">
+                {% endif %}
+            </div>
+            <div class="col">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">Nome: </span>
+                    <span>{{ customer.name }}</span>
+                </div>
+                <hr class="my-1">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">E-mail: </span>
+                    <span>{{ customer.email }}</span>
+                </div>
+                <hr class="my-1">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">Endereço: </span>
+                    <span>{{ customer.address }}</span>
+                </div>
+                <hr class="my-1">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">CEP: </span>
+                    <span>{{ customer.cep }}</span>
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">Cidade: </span>
+                    <span>{{ customer.city }}</span>
+                </div>
+                <hr class="my-1">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">Documento: </span>
+                    <span>{{ customer.document }}</span>
+                </div>
+                <hr class="my-1">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">Data de Registro: </span>
+                    <span>{{ customer.registration_date }}</span>
+                </div>
+                <hr class="my-1">
+                <div>
+                    <span class="d-inline-block" style="min-width: 100px;  font-weight:bold">Responsável pelo cadastro:
+                    </span>
+                    <span>{{ customer.registration_user.first_name }} {{ customer.registration_user.last_name }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if dados|length > 0 %}
+<div class="card text-bg-light my-2">
+    <div class="card-header h4 text-center w-100">
+        Débitos
+    </div>
+    <div class="card-body">
+        <div class="row w-100 h-100" style="font-weight: bold;">
+            <div class="col">
+                Livro
+            </div>
+            <div class="col">
+                Data do Aluguel
+            </div>
+            <div class="col">
+                Previsão de Entrega
+            </div>
+            <div class="col d-none d-lg-inline">
+                Dias de Atraso
+            </div>
+            <div class="col">
+                Multa
+            </div>
+        </div>
+        {% for dado in dados %}
+        <!-- {{ debito }} -->
+        <hr class="my-1">
+        <div class="row w-100 h-100">
+            <!-- {{dado}} -->
+            <div class="col">
+                {{ dado.rental.rental_book }}
+            </div>
+            <div class="col">
+                {{ dado.rental.rental_date|date:"d/M/Y" }}
+            </div>
+            <div class="col">
+                {{ dado.rental.return_period|date:"d/M/Y" }}
+            </div>
+            <div class="col d-none d-lg-inline">
+                {{ dado.dias_atraso }}
+            </div>
+            <div class="col">
+                {{ dado.multa }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="card text-bg-light my-2">
+    <div class="card-header h4 text-center w-100">
+        Histórico
+    </div>
+    <div class="card-body">
+        {% if not alugueis %}
+        SEM TRANSAÇÕES CADASTRADAS
+        {% else %}
+        <div class="row" style="font-weight: bold;">
+            <div class="col">
+                Livro
+            </div>
+            <div class="col">
+                Data do Aluguel
+            </div>
+            <div class="col">
+                Previsão de Entrega
+            </div>
+            <div class="col d-none d-lg-inline">
+                Atendente
+            </div>
+            <div class="col">
+                Entregue
+            </div>
+            <div class="col d-none d-lg-inline">
+                Multa Paga
+            </div>
+        </div>
+
+        {% for aluguel in alugueis %}
+        <hr class="my-1">
+        <div class="row">
+            <div class="col">
+                {{ aluguel.rental_book }}
+            </div>
+            <div class="col">
+                {{ aluguel.rental_date|date:"d/M/Y" }} 
+                <span class="d-none d-lg-inline">
+                às {{ aluguel.rental_date|date:"H:i" }}
+                </span>
+            </div>
+            <div class="col">
+                {{ aluguel.return_period|date:"d/M/Y" }} 
+                <span class="d-none d-lg-inline">
+                    às {{ aluguel.return_period|date:"H:i" }}
+                </span> 
+            </div>
+            <div class="col d-none d-lg-inline">
+                {{ aluguel.registration_user }}
+            </div>
+            <div class="col">
+                {% if aluguel.delivered %}Sim{% else %}Não{% endif %}
+            </div>
+            <div class="col d-none d-lg-inline">
+                {{ aluguel.amount_paid }}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
